@@ -1,0 +1,22 @@
+{
+  "name": "json-api-builder",
+  "version": "1.0.0",
+  "description": "builder for json api entities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaehwaDC/json-api-builder.git"
+  },
+  "keywords": [
+    "json-api"
+  ],
+  "author": "Gennady Voznyuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaehwaDC/json-api-builder/issues"
+  },
+  "homepage": "https://github.com/MaehwaDC/json-api-builder#readme"
+}
