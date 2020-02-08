@@ -2,7 +2,7 @@
   "name": "json-api-builder",
   "version": "0.0.1",
   "description": "builder for json api entities",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/MaehwaDC/json-api-builder/issues"
   },
-  "homepage": "https://github.com/MaehwaDC/json-api-builder#readme"
+  "homepage": "https://github.com/MaehwaDC/json-api-builder#readme",
+  "dependencies": {
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
 }
