@@ -1,62 +1,32 @@
-// https://github.com/yury-dymov/json-api-normalizer
-
-import isArray from 'lodash/isArray';
-import merge from 'lodash/merge';
-import values from 'lodash/values';
-import keys from 'lodash/keys';
-
-function wrap(json) {
-  if (isArray(json)) {
-    return json;
-  }
-
-  return [json];
-}
+import {
+  values,
+  merge,
+  toArr,
+} from '../utils/helpers';
 
 function extract(data, normalize) {
   const ret = {};
 
-  wrap(data).forEach((elem) => {
-    const {
-      type,
-      id,
-      attributes,
-      meta,
-      ...otherElementData
-    } = elem;
+  toArr(data).forEach((elem) => {
+    const type = elem.type;
+    const id = elem.id;
 
     ret[type] = ret[type] || {};
-    ret[type][id] = ret[type][id] || {
-      id,
-      type,
-      ...otherElementData,
-      ...meta,
-    };
+    ret[type][id] = ret[type][id] || elem;
 
-    if (attributes) {
-      keys(attributes).forEach((key) => {
-        const currentElement = ret[type][id];
-        let currentKey = key;
-
-        if (keys(currentElement).includes(key)) {
-          currentKey = `attr_${key}`;
-        }
-        currentElement[currentKey] = attributes[key];
-      });
+    if (normalize) {
+      ret[type][id] = normalize(elem);
     }
-
-    ret[type][id] = normalize ? normalize(ret[type][id]) : ret[type][id];
   });
-
 
   return ret;
 }
 
-function extractMeta(meta) {
+function extractMeta(meta, normalize) {
   const ret = {};
 
   values(meta).forEach((elem) => {
-    merge(ret, extract(elem));
+    merge(ret, extract(elem, normalize));
   });
 
   return ret;
@@ -64,19 +34,17 @@ function extractMeta(meta) {
 
 export default function createExtractor(normalize) {
   return function extractor(json) {
-    const { data, included, meta } = json;
-
     const res = {};
-    if (data) {
-      merge(res, extract(data, normalize));
+    if (json.data) {
+      merge(res, extract(json.data, normalize));
     }
 
-    if (included) {
-      merge(res, extract(included, normalize));
+    if (json.included) {
+      merge(res, extract(json.included, normalize));
     }
 
-    if (meta) {
-      merge(res, extractMeta(meta, normalize));
+    if (json.meta) {
+      merge(res, extractMeta(json.meta, normalize));
     }
 
     return res;

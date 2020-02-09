@@ -1,6 +1,7 @@
-import isObject from 'lodash/isObject';
-import { envCallMethod } from 'utils/helpers';
-import get from 'lodash/get';
+import {
+  get,
+  isObject,
+} from '../utils/helpers';
 
 function createFieldGetter(pattern) {
   const field = /\[(.*?)\]/.exec(pattern);
@@ -13,7 +14,7 @@ function createFieldGetter(pattern) {
 export default function createFormatterMiddleware(entitiesFormatter, pattern = '[type]Formatter') {
   if (!isObject(entitiesFormatter)) {
     const errorMessage = 'createFormatterMiddleware: parameter must be object with Function fields';
-    envCallMethod(() => console.error(errorMessage));
+    console.error(errorMessage);
 
     throw new Error(errorMessage);
   }
