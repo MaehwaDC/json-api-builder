@@ -1,11 +1,12 @@
-/* eslint-disable no-throw-literal */
-import isArray from 'lodash/isArray';
-import keys from 'lodash/keys';
-import memoize from 'lodash/memoize';
-import merge from 'lodash/merge';
-import unset from 'lodash/unset';
+import memoize from 'lodash.memoize';
+import unset from 'lodash.unset';
+import {
+  isArray,
+  keys,
+  merge,
+  isNil,
+} from '../utils/helpers';
 import './types';
-import isNil from 'lodash/isNil';
 
 /**
  * @type {Object} builder
@@ -73,9 +74,12 @@ const builder = {
       return entity;
     }
 
+    const builtEntity = entity;
     // если сущьность не нашлась в объекте entities берем объект entity
     // в рамках апи, такое может быть в поле meta
-    const builtEntity = this.entities[type]?.[id] || entity;
+    if (this.entities[type] && this.entities[type][id]) {
+      buildEntity = this.entities[type][id];
+    }
 
     const { relationships } = builtEntity;
 
@@ -119,7 +123,7 @@ const builder = {
    * */
   buildElements: function buildElement(data) {
     if (isArray(data)) {
-      return data.map(el => this.buildElements(el));
+      return data.map((el) => this.buildElements(el));
     }
 
     return this.formatEntity(data);

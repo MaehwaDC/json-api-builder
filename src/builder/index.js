@@ -1,4 +1,4 @@
-import isFunction from 'lodash/isFunction';
+import { isFunction } from '../utils/helpers';
 import builder from './builder';
 import { BuildLogger } from '../middlewares';
 

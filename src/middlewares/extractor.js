@@ -12,7 +12,7 @@ function extract(data, normalize) {
     const id = elem.id;
 
     ret[type] = ret[type] || {};
-    ret[type][id] = ret[type][id] || elem;
+    ret[type][id] = elem;
 
     if (normalize) {
       ret[type][id] = normalize(elem);

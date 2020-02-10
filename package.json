@@ -20,7 +20,10 @@
     "url": "https://github.com/MaehwaDC/json-api-builder/issues"
   },
   "homepage": "https://github.com/MaehwaDC/json-api-builder#readme",
-  "dependencies": {},
+  "dependencies": {
+    "lodash.memoize": "^4.1.2",
+    "lodash.unset": "^4.5.2"
+  },
   "devDependencies": {
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
